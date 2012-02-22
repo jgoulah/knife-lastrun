@@ -34,12 +34,6 @@ knife-lastrun is available on rubygems.org - if you have that source in your gem
 in /etc/chef/client.rb
 
 ```
-require "/var/chef/handlers/lastrun_update.rb"
+require "lastrun_update"
 report_handlers << LastRunUpdateHandler.new
 ```
-
-
-
-#### Script install
-
-Copy the knife-lastrun script from lib/chef/knife/lastrun.rb to your ~/.chef/plugins/knife directory.
