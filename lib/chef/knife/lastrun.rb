@@ -28,10 +28,7 @@ module GoulahPlugins
       end
 
       # time
-      time_entries = [ h.color('Status', :bold),
-                       h.color('Elapsed Time', :bold),
-                       h.color('Start Time', :bold),
-                       h.color('End Time', :bold) ]
+      time_entries = header('Status', 'Elapsed Time', 'Start Time', 'End Time');
 
       time_entries << node[:lastrun][:status]
       [:elapsed, :start, :end].each do |time|
@@ -41,10 +38,7 @@ module GoulahPlugins
       ui.msg "\n"
 
       # updated resources 
-      log_entries = [ h.color('Recipe', :bold),
-                      h.color('Action', :bold),
-                      h.color('Resource Type', :bold),
-                      h.color('Resource', :bold) ]
+      log_entries = header('Recipe', 'Action', 'Resource Type', 'Resource');
 
       node[:lastrun][:updated_resources].each do |log_entry|
         log_entries << "#{log_entry[:cookbook_name]}::#{log_entry[:recipe_name]}"
@@ -57,15 +51,21 @@ module GoulahPlugins
       ui.msg "\n"
 
       # debug stuff
-      debug_entries = [ h.color('Backtrace', :bold),
-                        h.color('Exception', :bold),
-                        h.color('Formatted Exception', :bold) ]
+      debug_entries = header('Backtrace', 'Exception', 'Formatted Exception');
       [:backtrace, :exception, :formatted_exception].each do |msg|
         debug_entries << (node[:lastrun][:debug][msg] ? node[:lastrun][:debug][msg].to_s : "none")
       end
       ui.msg h.list(debug_entries, :columns_down, 2)
       ui.msg "\n"
 
+    end
+
+    def header(*args)
+        entry = []
+        args.each do |arg|
+          entry << h.color(arg, :bold)
+        end
+        entry
     end
   end
 end
