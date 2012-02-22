@@ -51,11 +51,14 @@ module GoulahPlugins
       ui.msg "\n"
 
       # debug stuff
-      debug_entries = header('Backtrace', 'Exception', 'Formatted Exception');
-      [:backtrace, :exception, :formatted_exception].each do |msg|
-        debug_entries << (node[:lastrun][:debug][msg] ? node[:lastrun][:debug][msg].to_s : "none")
-      end
-      ui.msg h.list(debug_entries, :columns_down, 2)
+      debug_entries = []
+      debug_entries << h.color('Backtrace', :bold)
+      debug_entries << (node[:lastrun][:debug][:backtrace] ? node[:lastrun][:debug][:backtrace].join("\n") : "none")
+      debug_entries << ""
+
+      debug_entries << h.color('Exception', :bold)
+      debug_entries << (node[:lastrun][:debug][:formatted_exception] ? node[:lastrun][:debug][:formatted_exception].strip : "none")
+      ui.msg h.list(debug_entries, :rows)
       ui.msg "\n"
 
     end

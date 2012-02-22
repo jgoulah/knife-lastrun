@@ -35,5 +35,7 @@ in /etc/chef/client.rb
 
 ```
 require "lastrun_update"
-report_handlers << LastRunUpdateHandler.new
+handler = LastRunUpdateHandler.new
+report_handlers    << handler
+exception_handlers << handler 
 ```
