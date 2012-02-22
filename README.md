@@ -4,7 +4,7 @@ A plugin for Chef::Knife which displays node metadata about the last chef run.
 
 ## Usage 
 
-Supply a role name to get a dump of its hierarchy, pass -i for the roles that also include it
+Supply a node name to get metrics from the last chef run
 
 ```
 % knife node lastrun jgoulah.vm.mydomain.com
