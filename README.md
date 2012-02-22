@@ -1,4 +1,4 @@
-# knife-lastlog
+# knife-lastrun
 
 A plugin for Chef::Knife which displays node metadata about the last chef run.
 
