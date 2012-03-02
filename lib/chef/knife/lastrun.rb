@@ -1,3 +1,4 @@
+require 'chef/node'
 require 'chef/knife'
 require 'highline'
 
