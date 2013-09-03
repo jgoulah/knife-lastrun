@@ -48,7 +48,7 @@ module GoulahPlugins
         end
       end
 
-      ui.msg h.list(log_entries, :columns_across, 4)
+      ui.msg h.list(log_entries, :uneven_columns_across, 4)
       ui.msg "\n"
 
       # debug stuff
