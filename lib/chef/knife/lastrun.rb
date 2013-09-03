@@ -1,11 +1,11 @@
-require 'chef/node'
-require 'chef/knife'
-require 'highline'
-
 module GoulahPlugins
   class NodeLastrun < Chef::Knife
 
     banner "knife node lastrun NODE"
+
+    deps do
+      require 'highline'
+    end
 
     def h
       @highline ||= HighLine.new
