@@ -18,7 +18,7 @@ class LastRunUpdateHandler < Chef::Handler
     node.set[:lastrun][:debug][:formatted_exception] = run_status.formatted_exception
 
     node.set[:lastrun][:updated_resources] = []
-    run_status.updated_resources.each do |resource|
+    Array(run_status.updated_resources).each do |resource|
       m = "recipe[#{resource.cookbook_name}::#{resource.recipe_name}] ran '#{resource.action}' on #{resource.resource_name} '#{resource.name}'"
       Chef::Log.debug(m)
 
