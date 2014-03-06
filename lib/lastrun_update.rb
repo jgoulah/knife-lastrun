@@ -32,7 +32,11 @@ class LastRunUpdateHandler < Chef::Handler
 
     end
 
-    # Save entries to node
-    node.save
+    # Save attributes to node unless overridden runlist has been supplied
+    if Chef::Config.override_runlist
+      Chef::Log.warn("Skipping final node save because override_runlist was given")
+    else
+      node.save
+    end
   end
 end
