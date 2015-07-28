@@ -3,26 +3,27 @@ require 'chef/log'
 class LastRunUpdateHandler < Chef::Handler
 
   def report
-    node.set[:lastrun] = {}
+    _node = Chef::Node.load(node.name)
+    _node.set[:lastrun] = {}
 
-    node.set[:lastrun][:status] = run_status.success? ? "success" : "failed"
+    _node.set[:lastrun][:status] = run_status.success? ? "success" : "failed"
 
-    node.set[:lastrun][:runtimes] = {}
-    node.set[:lastrun][:runtimes][:elapsed] = run_status.elapsed_time
-    node.set[:lastrun][:runtimes][:start]   = run_status.start_time
-    node.set[:lastrun][:runtimes][:end]     = run_status.end_time
+    _node.set[:lastrun][:runtimes] = {}
+    _node.set[:lastrun][:runtimes][:elapsed] = run_status.elapsed_time
+    _node.set[:lastrun][:runtimes][:start]   = run_status.start_time
+    _node.set[:lastrun][:runtimes][:end]     = run_status.end_time
 
-    node.set[:lastrun][:debug] = {}
-    node.set[:lastrun][:debug][:backtrace]           = run_status.backtrace
-    node.set[:lastrun][:debug][:exception]           = run_status.exception
-    node.set[:lastrun][:debug][:formatted_exception] = run_status.formatted_exception
+    _node.set[:lastrun][:debug] = {}
+    _node.set[:lastrun][:debug][:backtrace]           = run_status.backtrace
+    _node.set[:lastrun][:debug][:exception]           = run_status.exception
+    _node.set[:lastrun][:debug][:formatted_exception] = run_status.formatted_exception
 
-    node.set[:lastrun][:updated_resources] = []
+    _node.set[:lastrun][:updated_resources] = []
     Array(run_status.updated_resources).each do |resource|
       m = "recipe[#{resource.cookbook_name}::#{resource.recipe_name}] ran '#{resource.action}' on #{resource.resource_name} '#{resource.name}'"
       Chef::Log.debug(m)
 
-      node.set[:lastrun][:updated_resources].insert(0, {
+      _node.set[:lastrun][:updated_resources].insert(0, {
         :cookbook_name => resource.cookbook_name,
         :recipe_name   => resource.recipe_name,
         :action        => resource.action,
@@ -36,7 +37,7 @@ class LastRunUpdateHandler < Chef::Handler
     if Chef::Config.override_runlist
       Chef::Log.warn("Skipping final node save because override_runlist was given")
     else
-      node.save
+      _node.save
     end
   end
 end
