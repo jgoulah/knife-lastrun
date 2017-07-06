@@ -4,26 +4,26 @@ class LastRunUpdateHandler < Chef::Handler
 
   def report
     _node = Chef::Node.load(node.name)
-    _node.override[:lastrun] = {}
+    _node.normal[:lastrun] = {}
 
-    _node.override[:lastrun][:status] = run_status.success? ? "success" : "failed"
+    _node.normal[:lastrun][:status] = run_status.success? ? "success" : "failed"
 
-    _node.override[:lastrun][:runtimes] = {}
-    _node.override[:lastrun][:runtimes][:elapsed] = run_status.elapsed_time
-    _node.override[:lastrun][:runtimes][:start]   = run_status.start_time
-    _node.override[:lastrun][:runtimes][:end]     = run_status.end_time
+    _node.normal[:lastrun][:runtimes] = {}
+    _node.normal[:lastrun][:runtimes][:elapsed] = run_status.elapsed_time
+    _node.normal[:lastrun][:runtimes][:start]   = run_status.start_time
+    _node.normal[:lastrun][:runtimes][:end]     = run_status.end_time
 
-    _node.override[:lastrun][:debug] = {}
-    _node.override[:lastrun][:debug][:backtrace]           = run_status.backtrace
-    _node.override[:lastrun][:debug][:exception]           = run_status.exception
-    _node.override[:lastrun][:debug][:formatted_exception] = run_status.formatted_exception
+    _node.normal[:lastrun][:debug] = {}
+    _node.normal[:lastrun][:debug][:backtrace]           = run_status.backtrace
+    _node.normal[:lastrun][:debug][:exception]           = run_status.exception
+    _node.normal[:lastrun][:debug][:formatted_exception] = run_status.formatted_exception
 
-    _node.override[:lastrun][:updated_resources] = []
+    _node.normal[:lastrun][:updated_resources] = []
     Array(run_status.updated_resources).each do |resource|
       m = "recipe[#{resource.cookbook_name}::#{resource.recipe_name}] ran '#{resource.action}' on #{resource.resource_name} '#{resource.name}'"
       Chef::Log.debug(m)
 
-      _node.override[:lastrun][:updated_resources].insert(0, {
+      _node.normal[:lastrun][:updated_resources].insert(0, {
         :cookbook_name => resource.cookbook_name,
         :recipe_name   => resource.recipe_name,
         :action        => resource.action,
