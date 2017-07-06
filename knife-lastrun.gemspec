@@ -5,7 +5,7 @@ require "knife-lastrun/version"
 Gem::Specification.new do |s|
   s.name          = 'knife-lastrun'
   s.version       = Knife::NodeLastrun::VERSION
-  s.date          = '2015-08-04'
+  s.date          = '2017-07-05'
   s.summary       = "A plugin for Chef::Knife which displays node metadata about the last chef run."
   s.description   = s.summary
   s.authors       = ["John Goulah"]
