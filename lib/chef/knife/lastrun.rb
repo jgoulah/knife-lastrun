@@ -1,7 +1,7 @@
 module GoulahPlugins
   class NodeLastrun < Chef::Knife
 
-    banner "knife node lastrun NODE"
+    banner 'knife node lastrun NODE'
 
     deps do
       require 'highline'

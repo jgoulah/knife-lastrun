@@ -6,7 +6,7 @@ class LastRunUpdateHandler < Chef::Handler
     _node = Chef::Node.load(node.name)
     _node.normal[:lastrun] = {}
 
-    _node.normal[:lastrun][:status] = run_status.success? ? "success" : "failed"
+    _node.normal[:lastrun][:status] = run_status.success? ? 'success' : 'failed'
 
     _node.normal[:lastrun][:runtimes] = {}
     _node.normal[:lastrun][:runtimes][:elapsed] = run_status.elapsed_time
@@ -35,7 +35,7 @@ class LastRunUpdateHandler < Chef::Handler
 
     # Save attributes to node unless overridden runlist has been supplied
     if Chef::Config.override_runlist
-      Chef::Log.warn("Skipping final node save because override_runlist was given")
+      Chef::Log.warn('Skipping final node save because override_runlist was given')
     else
       _node.save
     end
